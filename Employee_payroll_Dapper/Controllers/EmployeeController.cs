@@ -51,5 +51,23 @@ namespace Employee_payroll_Dapper.Controllers
             }
            
         }
+
+        [HttpPut]
+        public IActionResult UpdateEmployee(int EmpId,EmpPostModel empPostModel)
+        {
+            try
+            {
+                var result = EmpBL.UpdateEmployee(EmpId,empPostModel);
+                if (result == 0)
+                {
+                    return this.BadRequest(new { sucess = false, Message = "Something went wrong while Updating Employee Details!!" });
+                }
+                return this.Ok(new { sucess = true, Message = "Employee details Updated Sucessfully..." });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
