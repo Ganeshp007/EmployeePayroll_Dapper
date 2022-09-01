@@ -65,5 +65,24 @@ namespace RepositoryLayer.Services
                 sqlConnection.Close();
             }
         }
+
+        public int UpdateEmployee(int empId, EmpPostModel empPostModel)
+        {
+            SqlConnection sqlConnection = new SqlConnection(connetionString);
+            try
+            {
+                using (sqlConnection)
+                {
+                    sqlConnection.Open();
+                    var sql = ("Update Employee SET Firstname=@Firstname,Lastname=@Lastname,Address=@Address,MobileNo=@MobileNo where EmpId="+empId).ToString();
+                    var result = sqlConnection.Execute(sql, empPostModel);
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
