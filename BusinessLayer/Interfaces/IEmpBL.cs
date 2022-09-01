@@ -9,7 +9,5 @@ namespace BusinessLayer.Interfaces
     {
         public int AddEmployee(EmpPostModel empPostModel);
         public List<EmpGetModel> GetAllEmp();
-        public int Update(int EmpId, EmpPostModel empPostModel);
-
     }
 }
