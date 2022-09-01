@@ -74,7 +74,7 @@ namespace RepositoryLayer.Services
                 using (sqlConnection)
                 {
                     sqlConnection.Open();
-                    var sql = ("Update Employee SET Firstname=@Firstname,Lastname=@Lastname,Address=@Address,MobileNo=@MobileNo where EmpId="+empId).ToString();
+                    var sql = $"Update Employee SET Firstname=@Firstname,Lastname=@Lastname,Address=@Address,MobileNo=@MobileNo where EmpId={empId}";
                     var result = sqlConnection.Execute(sql, empPostModel);
                     return result;
                 }
@@ -82,6 +82,33 @@ namespace RepositoryLayer.Services
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
+
+        public int DeleteEmployee(int empId)
+        {
+            SqlConnection sqlConnection = new SqlConnection(connetionString);
+            try
+            {
+                using (sqlConnection)
+                {
+                    sqlConnection.Open();
+                    var sql = $"delete  from Employee Where EmpId={empId}";
+                    var result = sqlConnection.Execute(sql);
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConnection.Close();
             }
         }
     }
