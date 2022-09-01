@@ -1,12 +1,55 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BusinessLayer.Interfaces;
+using CommonLayer.EmployeeModels;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 
 namespace Employee_payroll_Dapper.Controllers
 {
-    public class EmployeeController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class EmployeeController : ControllerBase
     {
-        public IActionResult Index()
+        IEmpBL EmpBL;
+
+        public EmployeeController(IEmpBL empBL)
         {
-            return View();
+            EmpBL = empBL;
+        }
+
+        [HttpPost]
+        public IActionResult AddEmployee(EmpPostModel empPostModel)
+        {
+            try
+            {
+                var result= EmpBL.AddEmployee(empPostModel);
+                if(result==0)
+                {
+                    return this.BadRequest(new { sucess = false, Message = "Something went wrong while adding Employee!!" });
+                }
+                return this.Ok(new { sucess = true, Message = "Employee Added Sucessfully..." });
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        [HttpGet]
+        public IActionResult getAllEmp()
+        {
+            try
+            {
+                List<EmpGetModel> empList = new List<EmpGetModel>();
+                var EmpList = EmpBL.GetAllEmp();
+                return Ok(new { sucess = true, Message = "Employee's data fetched Successfully...", data = EmpList });
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+           
         }
     }
 }

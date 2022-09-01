@@ -13,5 +13,4 @@ exec sp_columns Employee --to describe table
 
 insert into Employee(Firstname,Lastname,Address,MobileNo) values('Ganesh','Potdar','Kothrud,pune.',9511949586)
 insert into Employee(Firstname,Lastname,Address,MobileNo) values('Rohan','Pande','Shivaji nagar,pune.',7741891991)
-
 select * from Employee
